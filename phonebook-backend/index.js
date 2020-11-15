@@ -49,17 +49,18 @@ app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => {
         res.json(persons)
     })
-    //res.json(persons)
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-    if (person) {
+    Person.findById(request.params.id).then(person => {
         response.json(person)
-    } else {
-        response.status(404).end()
-    }
+    })
+})
+
+app.get('/api/notes/:id', (request, response) => {
+    Note.findById(request.params.id).then(note => {
+        response.json(note)
+    })
 })
 
 app.delete('/api/persons/:id', (request, response) => {
@@ -77,29 +78,20 @@ const generateId = () => {
 }
 
 app.post('/api/persons/', (request, response) => {
-    const contact = request.body
-    let personsNames = persons.map((person) => person.name)
+    const body = request.body
 
-    if (!contact.name || !contact.number) {
-        return response.status(400).json({
-            error: 'The name or number is missing'
-        })
-    }
+    if (body.name === undefined) {
+        return response.status(400).json({ error: 'name missing' })
+    }  
 
-    if (personsNames.includes(contact.name)) {
-        return response.status(400).json({
-            error: 'Contact already in phonebook'
-        })
-    }
+    const person = new Person({        
+        name: body.name,
+        number: body.number,
+    })
 
-    const person = {
-        id: generateId(),
-        name: contact.name,
-        number: contact.number
-    }
-    persons = persons.concat(person)
-    response.json(person)
-
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 })
 
 const PORT = process.env.PORT || 3001

@@ -4,9 +4,8 @@ const password = process.argv[2]
 const nameInput = process.argv[3]
 const numberInput = process.argv[4]
 
-const url =
-    `mongodb+srv://DB_User_14:${password}@cluster0.jpoj8.mongodb.net/people?retryWrites=true&w=majority`
-
+//const url = add
+    
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 
