@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\models",
-    "\\requests"
+    ""
   ],
-  "SelectedNode": "\\models\\person.js",
+  "SelectedNode": "\\build",
   "PreviewInSolutionExplorer": false
 }
